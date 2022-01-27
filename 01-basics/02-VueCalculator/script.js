@@ -11,11 +11,6 @@ const vm = createApp({
   },
   computed: {
     resultCalc() {
-      return this.calculate();
-    },
-  },
-  methods: {
-    calculate() {
       switch (this.calcType) {
         case 'sum':
           return this.firstValue + this.secondValue;

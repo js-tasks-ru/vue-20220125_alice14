@@ -37,7 +37,7 @@ const vm = createApp({
   computed: {
     createData() {
       return this.emailsLocal.map((email) => {
-        if (email.toLowerCase().indexOf(this.search.toLowerCase()) !== -1 && this.search) {
+        if (email.toLowerCase().includes(this.search.toLowerCase()) && this.search) {
           return { email: email, setStyle: true };
         }
         return { email: email, setStyle: false };
