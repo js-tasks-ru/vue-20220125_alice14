@@ -9,23 +9,19 @@ const vm = createApp({
       calcType: 'sum',
     };
   },
-  methods: {
-    calculate() {
+  computed: {
+    resultCalc() {
       switch (this.calcType) {
         case 'sum':
-          this.result = this.firstValue + this.secondValue;
-          break;
+          return this.firstValue + this.secondValue;
         case 'subtract':
-          this.result = this.firstValue - this.secondValue;
-          break;
+          return this.firstValue - this.secondValue;
         case 'multiply':
-          this.result = this.firstValue * this.secondValue;
-          break;
+          return this.firstValue * this.secondValue;
         case 'divide':
-          this.result = this.firstValue / this.secondValue;
-          break;
+          return this.firstValue / this.secondValue;
         default:
-          break;
+          return this.result;
       }
     },
   },
