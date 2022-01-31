@@ -1,4 +1,4 @@
-// import { createApp } from './vendor/vue.esm-browser.js';
+import { createApp } from './vendor/vue.esm-browser.js';
 
 const API_URL = 'https://course-vue.javascript.ru/api';
 
@@ -14,4 +14,24 @@ function fetchMeetupById(meetupId) {
   });
 }
 
-// Требуется создать Vue приложение
+const vm = createApp({
+  data() {
+    return {
+      meetup: 0,
+      meetupTile: '',
+    };
+  },
+  watch: {
+    meetup(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        return fetchMeetupById(newValue)
+          .then((res) => {
+            this.meetupTile = res.title;
+          })
+          .catch((error) => {
+            throw error;
+          });
+      }
+    },
+  },
+}).mount('#app');
