@@ -3,14 +3,16 @@ import { defineComponent } from './vendor/vue.esm-browser.js';
 export default defineComponent({
   name: 'CounterButton',
   props: {
-    count: Number,
+    count: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
-  data() {
-    return {
-      counter: this.count,
-    };
+  methods: {
+    increment() {
+      this.$emit('update:count', this.count + 1); // почему нельзя count ++ но можно count +1 ?? в итоге зашла в ответа и ошибка была в этом
+    },
   },
-  template: `<button class = "custom-button" 
-  :value="count" 
-  @click="$emit('update:count', ++counter)" type="button">{{ count }}</button>`,
+  template: `<button class = "custom-button" type="button" @click="increment">{{ count }}</button>`,
 });
