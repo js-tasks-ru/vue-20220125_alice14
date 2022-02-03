@@ -13,8 +13,13 @@ export default defineComponent({
       required: false,
     },
   },
+  computed: {
+    imageStyles() {
+      return this.image ? { '--bg-url': 'url(' + this.image + ')' } : {};
+    },
+  },
   template: `
-    <div class="meetup-cover" v-bind:style="image ? { '--bg-url': 'url(' + image + ')' } : {}">
+    <div class="meetup-cover" v-bind:style="imageStyles">
         <h1 class="meetup-cover__title">{{title}}</h1>
     </div>`,
 });
