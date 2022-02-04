@@ -18,7 +18,7 @@ export default defineComponent({
     language: {
       type: String,
       required: false,
-    }
+    },
   },
   data() {
     return {
