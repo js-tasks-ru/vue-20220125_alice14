@@ -2,23 +2,17 @@ import { defineComponent } from './vendor/vue.esm-browser.js';
 
 export default defineComponent({
   name: 'CounterButton',
-
-  // Теперь текущее значение счётчика приходит от родителя через входной параметр
   props: {
     count: {
-      // Не забываем указать тип
       type: Number,
-      // Значение по умолчанию - 0
+      required: false,
       default: 0,
     },
   },
-
   methods: {
     increment() {
-      // При клике на кнопку порождаем событие и отправляем новое значение
-      this.$emit('update:count', this.count + 1);
+      this.$emit('update:count', this.count + 1); // почему нельзя count ++ но можно count +1 ?? в итоге зашла в ответа и ошибка была в этом
     },
   },
-
-  template: `<button type="button" @click="increment">{{ count }}</button>`,
+  template: `<button class = "custom-button" type="button" @click="increment">{{ count }}</button>`,
 });
