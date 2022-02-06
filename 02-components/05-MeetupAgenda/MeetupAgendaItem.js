@@ -26,7 +26,8 @@ export default defineComponent({
       <div class="agenda-item__col">
         <h3 class="agenda-item__title">{{ agendaItem.title ||  defaultTtitles[agendaItem.type]}}</h3>
         <p class="agenda-item__talk" v-if = "agendaItem.type === 'talk'">
-          <span class="agenda-item__dot">{{ agendaItem.speaker }}</span>
+          <span>{{ agendaItem.speaker }}</span>
+          <span class="agenda-item__dot"></span>
           <span class="agenda-item__lang">{{ agendaItem.language }}</span>
         </p>
         <p>{{ agendaItem.description }}</p>
