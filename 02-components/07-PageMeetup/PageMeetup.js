@@ -25,24 +25,39 @@ export default defineComponent({
       error: null,
     };
   },
+  computed: {
+    showMeetup() {
+      return !this.isLoading && !this.error;
+    },
+    showLoading() {
+      return this.isLoading && !this.error;
+    },
+  },
   watch: {
-    meetupId(newValue) {
+    meetupId(newValue, oldValue) {
       this.error = null;
-      return this.getMeetupById(newValue);
+      if (newValue !== oldValue) {
+        return this.getMeetupById(newValue);
+      }
+      return Promise.resolve();
     },
   },
   beforeMount() {
-    return this.getMeetupById(this.meetupId);
+    if (!this.meetup) {
+      return this.getMeetupById(this.meetupId);
+    }
   },
   methods: {
     getMeetupById(id) {
       this.isLoading = true;
       return fetchMeetupById(id)
         .then((meetupData) => {
-          this.meetup = meetupData;
+          if (meetupData) {
+            this.meetup = meetupData;
+          }
         })
         .catch((error) => {
-          this.error = error;
+          this.error = error.message;
         })
         .then(() => {
           this.isLoading = false;
@@ -51,8 +66,8 @@ export default defineComponent({
   },
   template: `
     <div class="page-meetup">
-      <meetup-view :meetup="meetup" v-if = "!isLoading"></meetup-view>
-      <ui-container v-else = "isLoading">
+      <meetup-view :meetup="meetup" v-if = "showMeetup"></meetup-view>
+      <ui-container v-if = "showLoading">
         <ui-alert>Загрузка...</ui-alert>
       </ui-container>
 
