@@ -29,20 +29,19 @@ export default {
   },
   methods: {
     // i would personally remove error and success methods and would just call formToasterData, but tests fail
-    success(type, time) {
-      this.formToasterData(type, time);
+    success(message) {
+      this.formToasterData('success', message);
     },
-    error(type, time) {
-      this.formToasterData(type, time);
+    error(message, time) {
+      this.formToasterData('error', message);
     },
-    formToasterData(type, time) {
+    formToasterData(type, message) {
       let toastData = {
         type,
         icon: this.icons[type],
         close: true,
-        text: ` ${this.text[type]}`,
+        message: message,
         id: Math.floor(Math.random() * 100),
-        time: ` ${time}`,
         interval: 5000,
         class: `toast_${type}`,
       };

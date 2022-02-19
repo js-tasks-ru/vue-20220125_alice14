@@ -1,8 +1,7 @@
 <template>
   <div class="toast" :class="toastData.class">
     <ui-icon class="toast__icon" :icon="toastData.icon" />
-    <span>{{ toastData.text }}</span>
-    <span>{{ toastData.time }}</span>
+    <span>{{ toastData.message }}</span>
   </div>
 </template>
 
