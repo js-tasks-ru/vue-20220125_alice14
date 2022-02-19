@@ -16,11 +16,10 @@ export default {
 
   methods: {
     success() {
-      this.$refs.toaster.success('Success ' + new Date().toLocaleTimeString());
+      this.$refs.toaster.success('success', new Date().toLocaleTimeString());
     },
-
     error() {
-      this.$refs.toaster.error('Error ' + new Date().toLocaleTimeString());
+      this.$refs.toaster.error('error', new Date().toLocaleTimeString());
     },
   },
 };

@@ -1,24 +1,64 @@
 <template>
   <div class="toasts">
-    <div class="toast toast_success">
-      <ui-icon class="toast__icon" icon="check-circle" />
-      <span>Success Toast Example</span>
-    </div>
-
-    <div class="toast toast_error">
-      <ui-icon class="toast__icon" icon="alert-circle" />
-      <span>Error Toast Example</span>
-    </div>
+    <ui-toast v-for="toast in toasters" :key="toast.id" :toastData="toast" @click="removeToaster(toast.id, true)" />
   </div>
 </template>
 
 <script>
 import UiIcon from './UiIcon';
+import UiToast from './UiToast';
 
 export default {
   name: 'TheToaster',
-
-  components: { UiIcon },
+  components: {
+    UiIcon,
+    UiToast,
+  },
+  data() {
+    return {
+      icons: {
+        success: 'check-circle',
+        error: 'alert-circle',
+      },
+      text: {
+        error: 'Error',
+        success: 'Success',
+      },
+      toasters: [],
+    };
+  },
+  methods: {
+    // i would personally remove error and success methods and would just call formToasterData, but tests fail
+    success(type, time) {
+      this.formToasterData(type, time);
+    },
+    error(type, time) {
+      this.formToasterData(type, time);
+    },
+    formToasterData(type, time) {
+      let toastData = {
+        type,
+        icon: this.icons[type],
+        close: true,
+        text: ` ${this.text[type]}`,
+        id: Math.floor(Math.random() * 100),
+        time: ` ${time}`,
+        interval: 5000,
+        class: `toast_${type}`,
+      };
+      this.toasters.push(toastData);
+      this.removeToaster(toastData.id, toastData.close, toastData.interval);
+    },
+    removeToaster(id, close, interval) {
+      if (close && !interval) {
+        this.toasters = this.toasters.filter((toast) => toast.id !== id);
+      } else if (close && interval) {
+        setTimeout(() => {
+          this.toasters = this.toasters.filter((toast) => toast.id !== id);
+        }, interval);
+      }
+    },
+  },
 };
 </script>
 
