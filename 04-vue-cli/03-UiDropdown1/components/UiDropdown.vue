@@ -1,18 +1,25 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="classToggle">
+    <button class="dropdown__toggle" type="button" @click="toggleMenu()" :class="buttonStyles">
+      <ui-icon :icon="currentItem.icon" class="dropdown__icon" />
+      <span>{{ currentItem.text }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div class="dropdown__menu" role="listbox" v-show="classToggle === 'dropdown_opened'">
+      <button
+        v-for="option in options"
+        :key="option.text"
+        class="dropdown__item"
+        role="option"
+        type="button"
+        :class="itemStyles"
+        @click="
+          $emit('update:modelValue', option.value);
+          toggleMenu();
+        "
+      >
+        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
   </div>
@@ -23,8 +30,55 @@ import UiIcon from './UiIcon';
 
 export default {
   name: 'UiDropdown',
-
+  data() {
+    return {
+      classToggle: '',
+      hasIcon: false,
+    };
+  },
+  props: {
+    options: {
+      type: Array,
+    },
+    modelValue: {
+      default: '',
+    },
+    title: {
+      type: String,
+    },
+  },
+  computed: {
+    buttonStyles() {
+      return this.hasIcon ? 'dropdown__toggle_icon' : ' ';
+    },
+    itemStyles() {
+      return this.hasIcon ? 'dropdown__item_icon' : ' ';
+    },
+    currentItem() {
+      let item = this.options.find((item) => this.modelValue === item.value);
+      if (item) {
+        return item;
+      } else {
+        return {
+          text: this.title,
+          icon: '',
+        };
+      }
+    },
+  },
+  methods: {
+    toggleMenu() {
+      this.classToggle.length > 0 ? (this.classToggle = '') : (this.classToggle = 'dropdown_opened');
+    },
+  },
   components: { UiIcon },
+  beforeMount() {
+    this.options.find((item) => {
+      if (item.hasOwnProperty('icon')) {
+        this.hasIcon = true;
+      }
+    });
+  },
 };
 </script>
 

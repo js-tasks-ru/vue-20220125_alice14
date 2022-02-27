@@ -27,7 +27,7 @@ export default defineComponent({
         year: 'numeric',
         day: '2-digit',
       },
-    }
+    };
   },
   computed: {
     localDate() {

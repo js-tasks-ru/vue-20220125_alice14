@@ -15,10 +15,10 @@ export default {
   components: { TheToaster },
 
   methods: {
+    // i would just use 1 mrthod in theToaster component and pass the type there, but tests fail
     success() {
       this.$refs.toaster.success('Success ' + new Date().toLocaleTimeString());
     },
-
     error() {
       this.$refs.toaster.error('Error ' + new Date().toLocaleTimeString());
     },
