@@ -2,7 +2,7 @@
   <div class="wrapper">
     <meetups-header />
     <main class="main">
-      <div>CURRENT PAGE</div>
+      <router-view />
     </main>
     <meetups-footer />
   </div>
@@ -23,9 +23,9 @@ export default {
 </script>
 
 <style>
-@import '~@/assets/styles/_fonts.css';
-@import '~@/assets/styles/_variables.css';
-@import '~@/assets/styles/_common.css';
+@import '@/assets/styles/_fonts.css';
+@import '@/assets/styles/_variables.css';
+@import '@/assets/styles/_common.css';
 
 .wrapper {
   background-color: var(--grey-light);
